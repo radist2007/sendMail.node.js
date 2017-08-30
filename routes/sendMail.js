@@ -2,9 +2,14 @@
 var express = require('express');
 var router = express.Router();
 
-router.post('/send', function(req, res) {
+router.get('/', function(req, res) {
+	console.log('--------/sendMail'.cyan);
+	res.render('sendMail');
+});
 
-	console.log('/sendMail submit');
+router.post('/', function(req, res) {
+
+	console.log('/sendMail fomr submit'.green);
     var name = req.body.name;
     var mail = req.body.mail;
     var message = req.body.message;

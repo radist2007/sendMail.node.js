@@ -31,12 +31,7 @@ app.get('/', function(req, res) {
 	res.render('home');
 });
 
-app.get('/sendMail', function(req, res) {
-	console.log('/send-mail'.cyan);
-	res.render('sendMail');
-});
-
-app.use('/sendMali', sendMail );
+app.use('/sendMail', sendMail );
 
 app.get('/about', function(req, res) {
 	console.log('about'.cyan);

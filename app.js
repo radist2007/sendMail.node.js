@@ -8,6 +8,10 @@ var sendMail = require('./routes/sendMail');
 //Init App
 var app = express();
 
+var credentials = require('./credentials.js');
+
+var emailService = require('./lib/email.js')(credentials);
+
 //--------------------------------------------------------------------------------Подключаем ХЕНДЛБАР
 //handlebars view engine
 var handlebars = require('express-handlebars').create({ defaultLayout: 'main' });

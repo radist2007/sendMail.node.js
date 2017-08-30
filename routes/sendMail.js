@@ -18,6 +18,8 @@ router.post('/', function(req, res) {
     console.log('mail ' + mail);
     console.log('message ' + message);
 
+    emailService.send(mail, message, html);
+
     res.render('home');
 
 });

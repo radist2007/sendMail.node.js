@@ -1,3 +1,4 @@
+
 {
   "name": "send_mail.node.js",
   "version": "1.0.0",
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/radist2007/sendMali.node.js/issues"
   },
-  "homepage": "https://github.com/radist2007/sendMali.node.js#readme"
+  "homepage": "https://github.com/radist2007/sendMali.node.js#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "colors": "^1.1.2",
+    "express": "^4.15.4",
+    "express-handlebars": "^3.0.0"
+  }
 }

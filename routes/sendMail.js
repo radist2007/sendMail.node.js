@@ -11,26 +11,42 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-
-	console.log('/sendMail fomr submit'.green);
+    console.log('/sendMail fomr submit'.green);
+    
     var name = req.body.name;
     var mail = req.body.mail;
     var message = req.body.message;
-    var html = '<h1>' + name + '</h1>' + 
-            '<h2>' + mail + '</h2>' +
-            '<p>' + message + '</p>'
-    ;
+    var html = '<h1>' + name + '</h1>' + '<h2>' + mail + '</h2>' + '<p>' + message + '</p>';
+
+    try {
+  
+    emailService.send(credentials.gmail.user, message, html);
+    // throw "myException"
+    
+    // var html = '<h3> + Дякую ' + name + '! за ... </h3>';
+    
+    // emailService.send(mail, message, html);
+
+    } catch (e) {
+        console.log('trable here --->try catch: '.red + e);
+    }
+
 
     console.log('name: ' + name);
     console.log('mail: ' + mail);
     console.log('message: ' + message);
 
-    emailService.send(credentials.gmail.user, message, html);
-    console.log(' MESSAGE_SEND from --->>'.black.bgYellow + mail );
+    console.log(' MESSAGE_SEND from my site --->>'.black.bgYellow);
     console.log(' MESSAGE_SEND to --->>'.black.bgYellow + credentials.gmail.user );
+    console.log(' MESSAGE_SEND to --->>'.black.bgYellow + mail );
 
     res.render('home');
 
 });
+
+router.post('/test', function(req,res){
+    
+});
+
 
 module.exports = router;

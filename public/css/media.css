@@ -1,0 +1,25 @@
+@media screen and (max-width: 480px) {
+    .wrap {
+        padding: 5%;
+        margin: 3%;
+        transition: all 1s;
+    }
+    .formInput {
+        margin: 10px;
+        padding: 10px;
+        transition: all 1s;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .wrap {
+        padding: 5%;
+        margin: 10%;
+        transition: all 1s;
+    }
+    
+}
+
+@media screen and (max-width: 980px) {
+    
+}

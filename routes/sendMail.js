@@ -16,14 +16,18 @@ router.post('/', function(req, res) {
     var name = req.body.name;
     var mail = req.body.mail;
     var message = req.body.message;
-    var html = '<h1>123</h1>';
+    var html = '<h1>' + name + '</h1>' + 
+            '<h2>' + mail + '</h2>' +
+            '<p>' + message + '</p>'
+    ;
 
-    console.log('name ' + name);
-    console.log('mail ' + mail);
-    console.log('message ' + message);
+    console.log('name: ' + name);
+    console.log('mail: ' + mail);
+    console.log('message: ' + message);
 
-    emailService.send(mail, message, html);
-    console.log(' MESSAGE_SEND to --->>'.black.bgYellow + mail );
+    emailService.send(credentials.gmail.user, message, html);
+    console.log(' MESSAGE_SEND from --->>'.black.bgYellow + mail );
+    console.log(' MESSAGE_SEND to --->>'.black.bgYellow + credentials.gmail.user );
 
     res.render('home');
 

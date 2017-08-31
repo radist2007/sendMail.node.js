@@ -20,17 +20,15 @@ body {
 }
 
 .wrap {
-    /* border: 1px solid red; */
     text-align: center;
     border-radius: 10px;
     padding: 10%;
     margin: 5% 20%;
     background-color: rgb(63, 76, 81);
-    /* background-image: url(../img/binding_dark_@2X.png); */
+    transition: all 1s;
 }
 
 .formLogin, .formRegistration {
-    /* border: 1px solid red; */
     display: flex;
     flex-direction: column;
 }
@@ -40,6 +38,7 @@ body {
     margin: 10px;
     padding: 5px;
     border-radius: 5px;
+    transition: all 1s;
 }
 
 .btn {

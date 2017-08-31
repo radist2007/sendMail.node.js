@@ -19,13 +19,12 @@ router.post('/', function(req, res) {
     var html = '<h1>' + name + '</h1>' + '<h2>' + mail + '</h2>' + '<p>' + message + '</p>';
 
     try {
-  
-    emailService.send(credentials.gmail.user, message, html);
-    // throw "myException"
+
+        emailService.send(credentials.gmail.user, message, html);
+
+        var html = '<h3> + Дякую ' + name + '! за ... </h3>';
     
-    // var html = '<h3> + Дякую ' + name + '! за ... </h3>';
-    
-    // emailService.send(mail, message, html);
+        emailService.send(mail, message, html);
 
     } catch (e) {
         console.log('trable here --->try catch: '.red + e);

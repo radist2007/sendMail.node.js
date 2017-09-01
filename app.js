@@ -3,7 +3,7 @@
 var express = require('express');
 var colors = require('colors');
 
-var sendMail = require('./routes/sendMail');
+var mainServ = require('./routes/mainServ');
 
 //Init App
 var app = express();
@@ -30,21 +30,12 @@ app.use(express.static(__dirname + '/public'));
 app.use(require('body-parser')());
 
 //--------------------------------------------------------------------------------Подключаем страницы
-app.get('/', function(req, res) {
-	console.log('home'.cyan);
-	res.render('home');
-});
-
-app.use('/sendMail', sendMail );
-
-app.get('/about', function(req, res) {
-	console.log('about'.cyan);
-	res.render('about');
-});
-
+app.use('/', mainServ );
 //--------------------------------------------------------------------------------Обработка ошибок
+
 // 404 catch-all handler (middleware)
 app.use(function(req, res, next){
+	console.log('NOT FOUND: '.bgMagenta + req.url);
 	res.status(404);
 	res.render('404');
 });

@@ -10,14 +10,18 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-    console.log('/sendMail fomr submited'.green);
+    console.log('/sendMail fomr wos submited'.green);
 
     var name = req.body.name;
     var mail = req.body.mail;
     var message = req.body.message;
     var html = '<h1>' + name + '</h1>' + '<h2>' + mail + '</h2>' + '<p>' + message + '</p>';
 
+    console.log(req.body);
+
     try {
+
+        let promis = new Promise(function(resolve, reject){});///--------------------------------------
 
         emailService.send(credentials.gmail.user, message, html);
 
@@ -26,11 +30,15 @@ router.post('/', function(req, res) {
         emailService.send(mail, message, html);
 
         res.render('thankYou');
-        console.log('thankYou');
+        console.log('------/thankYou'.cyan);
+
     } catch (e) {
-        console.log('trable here --->try catch: '.red + e);
-        res.render('notSend');
+        console.log('trable here --->try catch sendMail: '.red + e);
+        res.render('sendMailErr');
     }
+
+    console.log('sendMails dane!'.green)
+
 
     console.log('name: ' + name);
     console.log('mail: ' + mail);

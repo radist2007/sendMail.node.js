@@ -5,7 +5,7 @@ var credentials = require('../credentials.js');
 var emailService = require('../lib/email.js')(credentials);
 
 var global = "0";
-var globalcolls = 0;
+
 
 router.get('/', function(req, res) {
 	console.log('--------/sendMail'.cyan);
@@ -31,13 +31,20 @@ router.post('/', function(req, res) {
 
         var temp = "temp";
 
+        function sendMessages() {
+            return new Promise((resolve, reject) => {
+                console.log('sendMessages -------------------------------------- start');
+                    resolve(temp);
+            })
+        };
+
         function sendFirstMessage() {
             return new Promise((resolve, reject) => {
                 console.log('Promis 1 -------------------------------------- start');
                 //Send to me
                 emailService.send(credentials.gmail.user, message, html, function(callback) {
                     temp = callback;
-                    console.log("temp in callback = " + temp);
+                    console.log("temp in callback1 = " + temp);
                     resolve(temp);
                 })
             })
@@ -56,66 +63,34 @@ router.post('/', function(req, res) {
             })
         };
 
-                    // });
-            function checkSend() {
-                return new Promise (function(resolve, reject) {
-                    console.log("temp in callback = " + temp);
-                    if(temp == "1") {
-                        console.log('------/thankYou'.cyan);
-                        resolve('thankYou');
-                    } else {
-                        console.log('reject ->');
-                        reject('error4ick');
-                    }
-                })
-            }
+        function checkSend() {
+            return new Promise (function(resolve, reject) {
+                if(temp == "1") {
+                    console.log('checkSend done: all GOOD!'.cyan);
+                    resolve('thankYou');
+                } else {
+                    console.log('checkSend done: BED '.bgRed);
+                    reject('error4ick');
+                }
+            })
+        }
 
-            function backToUser() {
-                return new Promise(function(resolve, reject) {
-                    console.log("backToUser")
-                    if(temp == "1"){
-                        res.render('thankYou');
-                        console.log(' MESSAGE_SENDed to me --->>'.black.bgYellow + credentials.gmail.user );
-                        console.log(' MESSAGE_SENDed to user --->>'.black.bgYellow + mail );
-                    } else {
-                        res.render('sendMailErr');
-                    }
-                })
-            }
+        function backToUser() {
+            return new Promise(function(resolve, reject) {
+                console.log("backToUser")
+                res.render('thankYou');
+                console.log(' MESSAGE_SENDed to me --->>'.black.bgYellow + credentials.gmail.user );
+                console.log(' MESSAGE_SENDed to user --->>'.black.bgYellow + mail );
+            })
+        }
 
-
-                // if(global == "1"){
-                //     console.log("+global = " + global);
-                //     // Send to user
-                //     // var html = '<h3>' + name + ', дякую за підписку! </h3>';
-                //     // emailService.send(mail, message, html);
-                //     console.log(' MESSAGE_SENDed to me --->>'.black.bgYellow + credentials.gmail.user );
-                //     console.log(' MESSAGE_SENDed to user --->>'.black.bgYellow + mail );
-                //     res.render('thankYou');
-                //     console.log('------/thankYou'.cyan);
-                //     // resolve(global);
-                // } else {
-                //     console.log('reject ->');
-                //     // reject(global);
-                // }
-
-
-
-        
-        sendFirstMessage()
-        .then(function(value){console.log("value = " + value); return value;})
+        sendMessages()
+          .then(sendFirstMessage)
           .then(checkSend)
-            .then(sendSecondMessage)
-                .then(checkSend)
-                    .then(backToUser)
-
-
-            .catch(function(value){console.log('catch = ' + value);
-                    res.render('sendMailErr');
-            });
-
-
-
+          .then(sendSecondMessage)
+          .then(checkSend)
+          .then(backToUser)
+          .catch(value=>{console.log('catch = ' + value);res.render('sendMailErr');});
 
     } catch (e) {
         console.log('trable here ---> try/catch sendMail.js: '.red + e);

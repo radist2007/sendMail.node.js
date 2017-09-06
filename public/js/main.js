@@ -1,15 +1,24 @@
+function send() {
 
-var name = document.getElementById('name');
-var email = document.getElementById('email');
-var message = document.getElementById('message');
+    document.getElementById('sendBtn').style.display = "none";
 
-$("#sendAJAX").click(function(){
-    $.post("/test",
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var message = document.getElementById('message').value;
+
+    alert(name + " " + email + " " + message);
+
+    $.post("/sendMail",
     {
-        name: "Donald Duck",
+        name: name,
+        email: email,
+        message: message
     },
     function(data, status){
         alert("Data: " + data + "\nStatus: " + status);
         console.log('post AJAX: ' + data);
+        var parse = JSON.parse(data);
+        document.getElementById('wrap').innerHTML = parse.errMess;
+        // document.getElementById('wrap').innerHTML = data;
     });
-});
+}

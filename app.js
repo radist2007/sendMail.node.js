@@ -4,7 +4,6 @@ var express = require('express');
 var colors = require('colors');
 
 var sendMail = require('./routes/sendMail');
-var test = require('./routes/test')
 
 //Init App
 var app = express();
@@ -37,7 +36,6 @@ app.get('/', function(req, res) {
 });
 
 app.use('/sendMail', sendMail );
-app.use('/test', test );
 
 app.get('/about', function(req, res) {
 	console.log('--------/about'.cyan);

@@ -4,7 +4,6 @@ var router = express.Router();
 var credentials = require('../credentials.js');
 var emailService = require('../lib/email.js')(credentials);
 
-var global = "0";
 
 
 router.get('/', function(req, res) {
@@ -13,10 +12,11 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
+    console.log('Incaming POST'.black.bgYellow)
     console.log('/sendMail fomr wos submited'.green);
 
     var name = req.body.name,
-        mail = req.body.mail,
+        mail = req.body.email,
         message = req.body.message,
         html = '<h1>' + name + '</h1>' + '<h2>' + mail + '</h2>' + '<p>' + message + '</p>';
         console.log('name: ' + name);
@@ -50,7 +50,7 @@ router.post('/', function(req, res) {
             })
         };
 
-        function sendSecondMessage() {
+        function sendSecondMessage(temp) {
             return new Promise((resolve, reject) => {
                 console.log('Promis 2 --------------------------------------- start');
                 //   Send to user
@@ -63,24 +63,35 @@ router.post('/', function(req, res) {
             })
         };
 
-        function checkSend() {
+        function checkSend(temp) {
             return new Promise (function(resolve, reject) {
                 if(temp == "1") {
                     console.log('checkSend done: all GOOD!'.cyan);
                     resolve('thankYou');
                 } else {
-                    console.log('checkSend done: BED '.bgRed);
-                    reject('error4ick');
+                    console.log('checkSend done: BED '.red);
+                    reject(temp);
                 }
             })
         }
 
-        function backToUser() {
+        function backToUser(value) {
             return new Promise(function(resolve, reject) {
-                console.log("backToUser")
-                res.render('thankYou');
+                console.log("backToUser" + value);
+                res.send('thankYou');
                 console.log(' MESSAGE_SENDed to me --->>'.black.bgYellow + credentials.gmail.user );
                 console.log(' MESSAGE_SENDed to user --->>'.black.bgYellow + mail );
+            })
+        }
+
+        function toCatch(value) {
+            return new Promise(function(resolve, reject) {
+                console.log("this is catch function!".bgRed + value );
+                var toSend = {
+                    err: temp,
+                    errMess: '<p>Вибачте, сталася помилка :(</p> <p> Ваше повідомлуння НЕ надіслано,</p> <p> спробуйте пізніше.</p>'
+                }
+                res.send(JSON.stringify(toSend));
             })
         }
 
@@ -90,7 +101,7 @@ router.post('/', function(req, res) {
           .then(sendSecondMessage)
           .then(checkSend)
           .then(backToUser)
-          .catch(value=>{console.log('catch = ' + value);res.render('sendMailErr');});
+          .catch(toCatch);
 
     } catch (e) {
         console.log('trable here ---> try/catch sendMail.js: '.red + e);
@@ -98,7 +109,7 @@ router.post('/', function(req, res) {
         res.render('sendMailErr');
     }
 
-    console.log('sendMails end!'.green);
+    console.log('sendMails code end! But the ->'.cyan);
 });
 
 module.exports = router;

@@ -1,12 +1,12 @@
 
-        <section class="wrap">
+        <section id="wrap" class="wrap">
             <h1>SendMail</h1>
                 <div class="form">
                     <form class="formLogin" method="post" action="/sendMail">
-                        <input class="formInput" type="text" name="name" placeholder="name">
-                        <input class="formInput" type="text" name="mail" placeholder="mail">
-                        <textarea class="formInput" name="message" id="" cols="30" rows="10" placeholder="Your message here..."></textarea>
-                        <input class="formInput" type="submit" value="send">
+                        <input id="name" class="formInput" type="text" name="name" placeholder="name">
+                        <input id="email" class="formInput" type="text" name="mail" placeholder="mail">
+                        <textarea id="message" class="formInput" name="message" id="" cols="30" rows="10" placeholder="Your message here..."></textarea>
+                        <input id="sendBtn" onclick="send()" class="formInput" type="button" value="send">
                     </form>
                 </div>
         </section>

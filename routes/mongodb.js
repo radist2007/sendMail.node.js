@@ -27,9 +27,8 @@ router.get('/', function(req, res){
                 }
                 console.log(docs);
                 data = JSON.stringify(docs);
-                console.log(typeof(data));
                 db.close();
-    res.render('mongodb', {title: data});
+                res.render('mongodb', {title: "showBD", data: data});
             });
 
             console.log("connection end!");

@@ -16,7 +16,16 @@ var emailService = require('./lib/email.js')(credentials);
 
 //--------------------------------------------------------------------------------Подключаем ХЕНДЛБАР
 //handlebars view engine
-var handlebars = require('express-handlebars').create({ defaultLayout: 'main' });
+var handlebars = require('express-handlebars').create({ 
+	defaultLayout: 'main',
+    helpers: {
+        section: function(name, options){
+            if(!this._sections) this._sections = {};
+            this._sections[name] = options.fn(this);
+            return null;
+		}
+	}
+ });
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -34,7 +43,7 @@ app.use(require('body-parser')());
 //--------------------------------------------------------------------------------Подключаем страницы
 app.get('/', function(req, res) {
 	console.log('--------/home'.cyan);
-	res.render('home');
+	res.render('home', {title: "home"});
 });
 
 app.use('/sendMail', sendMail );

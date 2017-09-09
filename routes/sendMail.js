@@ -13,6 +13,8 @@ router.post('/', function(req, res) {
     console.log('Incaming POST'.black.bgYellow)
     console.log('/sendMail fomr wos submited'.green);
 
+    try {
+
     var name = req.body.name,
         mail = req.body.email,
         message = req.body.message,
@@ -22,8 +24,6 @@ router.post('/', function(req, res) {
         console.log('message: ' + message);
         console.log(req.body);
         console.log("---------------------------------------------------------------------------------");
-
-    try {
 
         console.log(' MESSAGE START SENDING from my site --->>'.black.bgYellow);
 
@@ -89,6 +89,7 @@ router.post('/', function(req, res) {
                     err: temp,
                     errMess: '<p>Вибачте, сталася помилка :(</p> <p> Ваше повідомлуння НЕ надіслано,</p> <p> спробуйте пізніше.</p>'
                 }
+                // res.sendStatus('500');
                 res.send(JSON.stringify(toSend));
             })
         }

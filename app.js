@@ -2,8 +2,10 @@
 //--------------------------------------------------------------------------------Подключаем зависимосте
 var express = require('express');
 var colors = require('colors');
+var mongo = require('mongodb');
 
 var sendMail = require('./routes/sendMail');
+var mongodb = require('./routes/mongodb');
 
 //Init App
 var app = express();
@@ -36,6 +38,7 @@ app.get('/', function(req, res) {
 });
 
 app.use('/sendMail', sendMail );
+app.use('/mongodb', mongodb);
 
 app.get('/about', function(req, res) {
 	console.log('--------/about'.cyan);

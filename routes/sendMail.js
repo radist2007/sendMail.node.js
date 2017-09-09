@@ -4,8 +4,6 @@ var router = express.Router();
 var credentials = require('../credentials.js');
 var emailService = require('../lib/email.js')(credentials);
 
-
-
 router.get('/', function(req, res) {
 	console.log('--------/sendMail'.cyan);
 	res.render('sendMail');

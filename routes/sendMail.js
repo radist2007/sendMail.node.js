@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var mongodb = require('mongodb');
 
 var credentials = require('../credentials.js');
 var emailService = require('../lib/email.js')(credentials);
+var connectToDB = require('../lib/mongoDBconnect.js');
 
 router.get('/', function(req, res) {
 	console.log('--------/sendMail'.cyan);
@@ -27,12 +29,12 @@ router.post('/', function(req, res) {
 
         console.log(' MESSAGE START SENDING from my site --->>'.black.bgYellow);
 
-        var temp = "temp";
 
         function sendMessages() {
             return new Promise((resolve, reject) => {
+                var temp = "temp";
                 console.log('sendMessages -------------------------------------- start');
-                    resolve(temp);
+                resolve(temp);
             })
         };
 
@@ -73,10 +75,51 @@ router.post('/', function(req, res) {
             })
         }
 
+        function addToDB(temp) {
+            return new Promise (function(resolve, reject) {
+                connectToDB.insert(name, mail, message);
+
+                // var MongoClient = mongodb.MongoClient;
+
+                // var url = 'mongodb://localhost:27017/sendMailApp';
+                // var data;
+
+                // MongoClient.connect(url, function(err, db){
+                //     if(err){
+                //         console.log('Unable to connect to the server ', err);
+                //         reject(temp);
+                //     } else {
+                //         console.log('connection GOOD!'.bgGreen);
+
+                //         db.collection('usersMessages').insert({name: name, email: mail, message: message}, function(err, result) {
+                //             if(err) {
+                //                 console.log(err);
+                //                 res.sendStatus(500);
+                //                 db.close();
+                //                 reject(temp);
+                //             } else {
+                //                 console.log('connection result: '.cyan + result);
+                //                 db.close();
+                //                 resolve('thankYou');
+                //             }
+                //         })
+
+                //                 resolve('thankYou');
+                //         console.log("connection code end!");
+                //         db.close();
+                //     }
+                // })
+            })
+        }
+
         function backToUser(value) {
             return new Promise(function(resolve, reject) {
                 console.log("backToUser" + value);
-                res.send('thankYou');
+                var toSend = {
+                    err: temp,
+                    mess: '<p> Ваша заявка прийнята! </p><p>На Вашу електронну адресу відправлено листа з реквізитами,</p><p>Гарного дня!)</p>'
+                }
+                res.status(200).send(toSend);
                 console.log(' MESSAGE_SENDed to me --->>'.black.bgYellow + credentials.gmail.user );
                 console.log(' MESSAGE_SENDed to user --->>'.black.bgYellow + mail );
             })
@@ -87,10 +130,9 @@ router.post('/', function(req, res) {
                 console.log("this is catch function!".bgRed + value );
                 var toSend = {
                     err: temp,
-                    errMess: '<p>Вибачте, сталася помилка :(</p> <p> Ваше повідомлуння НЕ надіслано,</p> <p> спробуйте пізніше.</p>'
+                    mess: '<p>Вибачте, сталася помилка :(</p> <p> Ваше повідомлуння НЕ надіслано,</p> <p> спробуйте пізніше.</p>'
                 }
-                // res.sendStatus('500');
-                res.send(JSON.stringify(toSend));
+                res.status(200).send(toSend);
             })
         }
 
@@ -99,6 +141,7 @@ router.post('/', function(req, res) {
           .then(checkSend)
           .then(sendSecondMessage)
           .then(checkSend)
+          .then(addToDB)
           .then(backToUser)
           .catch(toCatch);
 

@@ -78,6 +78,7 @@ router.post('/', function(req, res) {
         function addToDB(temp) {
             return new Promise (function(resolve, reject) {
                 connectToDB.insert(name, mail, message);
+                resolve('thankYou');
 
                 // var MongoClient = mongodb.MongoClient;
 
@@ -114,7 +115,7 @@ router.post('/', function(req, res) {
 
         function backToUser(value) {
             return new Promise(function(resolve, reject) {
-                console.log("backToUser" + value);
+                console.log("backToUser sed " + value);
                 var toSend = {
                     err: temp,
                     mess: '<p> Ваша заявка прийнята! </p><p>На Вашу електронну адресу відправлено листа з реквізитами,</p><p>Гарного дня!)</p>'

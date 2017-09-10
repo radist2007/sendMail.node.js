@@ -1,5 +1,12 @@
-<section class="wrap">
+<section id="wrap" class="wrap">
+    <ul id="myList">
+    </ul>
     <div class="form">
-        <h1>{{data}}</h1>
+        <button id="test" class="formInput" onclick="test()">check DB</button>
     </div>
 </section>
+
+{{#section 'script'}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="/js/mongodb.js"></script>
+{{/section}}

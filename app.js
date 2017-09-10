@@ -51,7 +51,7 @@ app.use('/mongodb', mongodb);
 
 app.get('/about', function(req, res) {
 	console.log('--------/about'.cyan);
-	res.render('about');
+	res.render('about', {title: "about"});
 
 });
 

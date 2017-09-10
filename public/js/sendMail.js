@@ -6,7 +6,7 @@ function send() {
     var email = document.getElementById('email').value;
     var message = document.getElementById('message').value;
 
-    alert(name + " " + email + " " + message);
+    // alert(name + " " + email + " " + message);
 
     $.post("/sendMail",
     {
@@ -18,7 +18,7 @@ function send() {
         alert("Data: " + data + "\nStatus: " + status);
         console.log('post AJAX: ' + data);
         var parse = JSON.parse(data);
-        document.getElementById('wrap').innerHTML = parse.errMess;
+        document.getElementById('test').innerHTML = parse.errMess;
         // document.getElementById('wrap').innerHTML = data;
     });
 }

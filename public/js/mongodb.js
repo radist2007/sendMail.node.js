@@ -13,16 +13,7 @@ function test(){
             var node = document.createElement("div");
             node.className = "border";
             node.innerHTML = "<div>" + parse[i].name + "</div><div>" + parse[i].email + "</div><div>" + parse[i].message + "</div>";
-            // var textnode = document.createTextNode(parse[i].name + ' ' +  parse[i].email + ' ' +  parse[i].message);
-            // node.appendChild(textnode);
             document.getElementById("myList").appendChild(node);
-            // var node = document.createElement("LI");
-            // var textnode = document.createTextNode(parse[i].name);
-            // node.appendChild(textnode);
-            // document.getElementById("myList").appendChild(node);
-            // document.getElementById('name').innerHTML = parse[i].name;
-            // document.getElementById('email').innerHTML = parse[i].email;
-            // document.getElementById('message').innerHTML = parse[i].message;
         }
     });
 }
